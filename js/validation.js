@@ -7,6 +7,7 @@ btnSubmit.addEventListener("click", function(e){
   if(!isEmail("email", 5)) e.preventDefault();
   if(!isCheck("gender")) e.preventDefault();
   if(!isCheck("hobby")) e.preventDefault();
+  if(!isSelect("edu")) e.preventDefault();
 })
 
 function isTxt(name, len){
@@ -62,11 +63,34 @@ function isCheck(name){
     return true;
   }else{
     var errMsgs = inputs[0].closest("td").querySelectorAll("p"); 
-    if(errMsgs.length > 0) input[0].closest("td").querySelector("p").remove();
+    if(errMsgs.length > 0) inputs[0].closest("td").querySelector("p").remove();
 
     var errMsg = document.createElement("p");
     errMsg.append("필수 입력사항을 체크하세요.");
     inputs[0].closest("td").append(errMsg);
+    return false;
+  }
+}
+
+function isSelect(name){
+  var sel= form.querySelector(`[name = ${name}]`);
+  console.log(sel);
+  var sel_index = sel.options.selectedIndex;
+  var val = sel.options[sel_index].value;
+
+  if(val !== ""){
+    var errMsgs = sel.closest("td").querySelectorAll("p");
+    if(errMsgs.length > 0) sel.closest("td").querySelector("p").remove();
+
+    return true;
+  }else{
+    var errMsgs = sel.closest("td").querySelectorAll("p");
+    if(errMsgs.length > 0) sel.closest("td").querySelector("p").remove();
+
+    var errMsg = document.createElement("p");
+    errMsg.append("항목을 선택해주세요");
+    sel.closest("td").append(errMsg);
+    
     return false;
   }
 }
